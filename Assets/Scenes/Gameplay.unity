@@ -153,7 +153,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &890695949
 MonoBehaviour:
@@ -170,6 +170,7 @@ MonoBehaviour:
   _roadPrefabs:
   - {fileID: 6393072668953734185, guid: 3ffa8e39fedf1cd4a8d08d2cf9f7946d, type: 3}
   - {fileID: 412438507825726828, guid: 1e233c58184b2d74fab1bf45d29c54b4, type: 3}
+  _roadCountBetweenPlayer: 10
 --- !u!1001 &1240043773
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -183,7 +184,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2242236038536151009, guid: 48713777a1c75d54d84ecc681b975c63, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2242236038536151009, guid: 48713777a1c75d54d84ecc681b975c63, type: 3}
       propertyPath: m_LocalPosition.x
@@ -224,6 +225,10 @@ PrefabInstance:
     - target: {fileID: 2242236038536151009, guid: 48713777a1c75d54d84ecc681b975c63, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5328232701451295630, guid: 48713777a1c75d54d84ecc681b975c63, type: 3}
+      propertyPath: _moveDuration
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 5328232701451295630, guid: 48713777a1c75d54d84ecc681b975c63, type: 3}
       propertyPath: _playerTransform
@@ -328,7 +333,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &1974303594
 GameObject:
@@ -341,6 +346,7 @@ GameObject:
   - component: {fileID: 1974303597}
   - component: {fileID: 1974303596}
   - component: {fileID: 1974303595}
+  - component: {fileID: 1974303598}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -412,5 +418,19 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1974303598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974303594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38f210f0fd1051a4c84dd7f9706a7a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 1240043777}
+  _distanceFromPlayer: 2
