@@ -1,11 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class WorldBuilder : MonoBehaviour
 {
     [SerializeField] private GameObject[] _roadPrefabs;
-    [SerializeField] private int _roadCountBetweenPlayer = 10;
+    [SerializeField] private int initialRoadSpawnNumber = 20;
     
     void Start()
     {
@@ -23,7 +25,7 @@ public class WorldBuilder : MonoBehaviour
 
     private void BuildRoadWithDangerRoad()
     {
-        for (int i = 1; i < _roadCountBetweenPlayer; i++)
+        for (int i = 1; i < initialRoadSpawnNumber; i++)
         {
             var chosenIndex = Random.Range(0, _roadPrefabs.Length);
             

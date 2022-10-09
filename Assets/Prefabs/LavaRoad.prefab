@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6393072668953734191}
   - component: {fileID: 6393072668953734184}
+  - component: {fileID: 174411608540301171}
   m_Layer: 0
   m_Name: LavaRoad
   m_TagString: Untagged
@@ -46,3 +47,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roadPrefab: {fileID: 2216826996081896759, guid: ba91755604af7b847977195f9c69ceae, type: 3}
   _halfRoadCount: 3
+  enemyPrefab: {fileID: 7058464952485903539, guid: bc6b157069b913e4a8d88d462612e489, type: 3}
+--- !u!114 &174411608540301171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6393072668953734185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8ce96fb593f0ae469846e32e0a530ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPosition: {x: 6, y: 0, z: 0}
+  enemyMoveEndPosition: {x: -6, y: 0, z: 0}
+  enemyPrefab: {fileID: 7058464952485903539, guid: bc6b157069b913e4a8d88d462612e489, type: 3}
+  spawnDelay: 1
