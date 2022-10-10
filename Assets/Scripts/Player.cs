@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _moveDuration = .5f;
     [SerializeField] private float _rotateDuration = .2f;
     [SerializeField] private float _jumpPower = 0.5f;
+    [SerializeField] private float _dieAnimationDuration = 0.5f;
 
     private Sequence _sequence;
 
@@ -39,5 +41,21 @@ public class Player : MonoBehaviour
                 _playerTransform.DORotate(new Vector3(0, 90, 0), _rotateDuration);
             }
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!other.CompareTag("Enemy"))
+            return;
+
+        AnimateDie();
+    }
+
+    private void AnimateDie()
+    {
+        transform.DOScaleY(0.1f, _dieAnimationDuration);
+        transform.DOScaleX(2, _dieAnimationDuration);
+        transform.DOScaleZ(2, _dieAnimationDuration);
+        enabled = false;
     }
 }

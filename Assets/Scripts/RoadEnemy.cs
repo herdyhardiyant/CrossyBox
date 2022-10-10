@@ -10,7 +10,7 @@ public class RoadEnemy : MonoBehaviour
     }
 
     private Vector3 initialPosition;
-    
+
     void Start()
     {
         initialPosition = transform.position;
@@ -20,13 +20,10 @@ public class RoadEnemy : MonoBehaviour
     void Update()
     {
         MoveEnemy();
-        
-        // if initial position is more than 15 units away from current position, destroy the object
+
         if (Vector3.Distance(initialPosition, transform.position) > 15)
         {
-            print("destroyed");
             Destroy(gameObject);
         }
-        
     }
 }

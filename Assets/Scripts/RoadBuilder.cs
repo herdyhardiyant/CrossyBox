@@ -6,8 +6,8 @@ using UnityEngine;
 public class RoadBuilder : MonoBehaviour
 {
     [SerializeField] private GameObject roadPrefab;
-    [SerializeField] private int _halfRoadCount;
-    [SerializeField] private GameObject enemyPrefab;
+
+    private int _halfRoadCount = 3;
 
     void Start()
     {

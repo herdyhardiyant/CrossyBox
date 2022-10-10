@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 412438507825726830}
   - component: {fileID: 412438507825726829}
+  - component: {fileID: -4255046552866452943}
   m_Layer: 0
   m_Name: SandRoad
   m_TagString: Untagged
@@ -45,4 +46,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roadPrefab: {fileID: 4285709201521317511, guid: 03c2174c64289ea4eb652da8c441955a, type: 3}
-  _halfRoadCount: 3
+--- !u!114 &-4255046552866452943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 412438507825726828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04d798c9d9fc3af41a1fdb95d0a5bd47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _treeCount: 3
+  _treePrefab: {fileID: 8553677949645299557, guid: 3d21e71dbbec6534d9d25239b0b88417, type: 3}
