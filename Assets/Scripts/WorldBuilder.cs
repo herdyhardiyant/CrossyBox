@@ -7,6 +7,17 @@ public class WorldBuilder : MonoBehaviour
     [SerializeField] private GameObject[] _roadPrefabs;
     [SerializeField] private int initialRoadSpawnNumber = 20;
     
+ 
+    // TODO use player position to spawn new roads and destroy old roads
+    // TODO Update zlimit to be based on player position
+    
+    private int zLimit = -2;
+    
+    public int ZLimit => zLimit;
+    public int LeftLimit => -7;
+    public int RightLimit => 7;
+
+    
     void Start()
     {
         BuildSafeRoadForPlayerSpawn();
@@ -15,7 +26,7 @@ public class WorldBuilder : MonoBehaviour
 
     private void BuildSafeRoadForPlayerSpawn()
     {
-        for (int i = -2; i <= 0; i++)
+        for (int i = zLimit; i <= 0; i++)
         {
             Instantiate(_roadPrefabs[1], new Vector3(0, 0, i), Quaternion.identity, transform);
         }
@@ -29,7 +40,7 @@ public class WorldBuilder : MonoBehaviour
             
             if (CheckIsTheLastThreeRoadsAreSame(chosenIndex))
             {
-                chosenIndex = secondLastChosenRoadIndex == 0 ? 1 : 0;
+                chosenIndex = _secondLastChosenRoadIndex == 0 ? 1 : 0;
             }
 
             var chosenRoad = _roadPrefabs[chosenIndex];
@@ -37,42 +48,42 @@ public class WorldBuilder : MonoBehaviour
             Instantiate(chosenRoad, new Vector3(0, 0, i), Quaternion.identity, transform);
         }
     }
-    
-    int firstLastChosenRoadIndex = -1;
-    int secondLastChosenRoadIndex = -1;
-    int thirdLastChosenRoadIndex = -1;
+
+    private int _firstLastChosenRoadIndex = -1;
+    private int _secondLastChosenRoadIndex = -1;
+    private int _thirdLastChosenRoadIndex = -1;
     
     private bool CheckIsTheLastThreeRoadsAreSame(int chosenRoadByIndex)
     {
-        if (firstLastChosenRoadIndex == -1)
+        if (_firstLastChosenRoadIndex == -1)
         {
-            firstLastChosenRoadIndex = chosenRoadByIndex;
-            secondLastChosenRoadIndex = -1;
+            _firstLastChosenRoadIndex = chosenRoadByIndex;
+            _secondLastChosenRoadIndex = -1;
         }
-        else if (secondLastChosenRoadIndex == -1)
+        else if (_secondLastChosenRoadIndex == -1)
         {
-            secondLastChosenRoadIndex = chosenRoadByIndex;
-            thirdLastChosenRoadIndex = -1;
+            _secondLastChosenRoadIndex = chosenRoadByIndex;
+            _thirdLastChosenRoadIndex = -1;
 
-            if (secondLastChosenRoadIndex != firstLastChosenRoadIndex)
+            if (_secondLastChosenRoadIndex != _firstLastChosenRoadIndex)
             {
-                firstLastChosenRoadIndex = -1;
+                _firstLastChosenRoadIndex = -1;
             }
         }
-        else if (thirdLastChosenRoadIndex == -1)
+        else if (_thirdLastChosenRoadIndex == -1)
         {
-            thirdLastChosenRoadIndex = chosenRoadByIndex;
+            _thirdLastChosenRoadIndex = chosenRoadByIndex;
 
-            if (secondLastChosenRoadIndex != thirdLastChosenRoadIndex)
+            if (_secondLastChosenRoadIndex != _thirdLastChosenRoadIndex)
             {
-                firstLastChosenRoadIndex = -1;
+                _firstLastChosenRoadIndex = -1;
             }
         }
 
-        if (secondLastChosenRoadIndex == firstLastChosenRoadIndex &&
-            secondLastChosenRoadIndex == thirdLastChosenRoadIndex)
+        if (_secondLastChosenRoadIndex == _firstLastChosenRoadIndex &&
+            _secondLastChosenRoadIndex == _thirdLastChosenRoadIndex)
         {
-            firstLastChosenRoadIndex = -1;
+            _firstLastChosenRoadIndex = -1;
             return true;
         }
 

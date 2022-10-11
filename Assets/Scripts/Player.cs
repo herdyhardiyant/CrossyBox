@@ -4,51 +4,91 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private Transform _playerTransform;
     [SerializeField] private float _moveDuration = .5f;
     [SerializeField] private float _rotateDuration = .2f;
     [SerializeField] private float _jumpPower = 0.5f;
     [SerializeField] private float _dieAnimationDuration = 0.5f;
+    [SerializeField] private WorldBuilder _worldBuilder;
 
-    private Sequence _sequence;
+    private Sequence _moveAnimationSequence;
+
 
     void Update()
     {
-        var playerCurrentPosition = _playerTransform.position;
-
-        if (_sequence == null || !_sequence.IsActive())
+        if (_moveAnimationSequence == null || !_moveAnimationSequence.IsActive())
         {
             if (Input.GetKey("w"))
             {
-                _sequence = _playerTransform.DOJump(playerCurrentPosition + Vector3.forward, _jumpPower, 1,
-                    _moveDuration);
-                _playerTransform.DORotate(new Vector3(0, 0, 0), _rotateDuration);
+                Move(Vector3.forward, new Vector3(0, 0, 0));
             }
             else if (Input.GetKey("s"))
             {
-                _sequence = _playerTransform.DOJump(playerCurrentPosition + Vector3.back, _jumpPower, 1, _moveDuration);
-                _playerTransform.DORotate(new Vector3(0, 180, 0), _rotateDuration);
+                Move(Vector3.back, new Vector3(0, 180, 0));
             }
             else if (Input.GetKey("a"))
             {
-                _sequence = _playerTransform.DOJump(playerCurrentPosition + Vector3.left, _jumpPower, 1, _moveDuration);
-                _playerTransform.DORotate(new Vector3(0, -90, 0), _rotateDuration);
+                Move(Vector3.left, new Vector3(0, -90, 0));
             }
             else if (Input.GetKey("d"))
             {
-                _sequence = _playerTransform.DOJump(playerCurrentPosition + Vector3.right, _jumpPower, 1,
-                    _moveDuration);
-                _playerTransform.DORotate(new Vector3(0, 90, 0), _rotateDuration);
+                Move(Vector3.right, new Vector3(0, 90, 0));
             }
         }
     }
 
+    private void Move(Vector3 direction, Vector3 rotation)
+    {
+        var playerCurrentPosition = transform.position;
+        playerCurrentPosition = new Vector3(playerCurrentPosition.x, 0, playerCurrentPosition.z);
+        var moveTarget = playerCurrentPosition + direction;
+
+        if (moveTarget.x < _worldBuilder.LeftLimit || moveTarget.x > _worldBuilder.RightLimit)
+        {
+            MoveBlocked(rotation);
+            return;
+        }
+
+        if (moveTarget.z < _worldBuilder.ZLimit)
+        {
+            MoveBlocked(rotation);
+            return;
+        }
+
+
+        if (Tree.TreePositions.Contains(moveTarget))
+        {
+            MoveBlocked(rotation);
+            return;
+        }
+
+        MoveWithJumpToTargetLocation(rotation, moveTarget);
+    }
+
+    private void MoveWithJumpToTargetLocation(Vector3 rotation, Vector3 moveTarget)
+    {
+        _moveAnimationSequence = transform.DOJump(moveTarget, _jumpPower, 1,
+            _moveDuration);
+        transform.DORotate(rotation, _rotateDuration);
+    }
+
+    private void MoveBlocked(Vector3 rotation)
+    {
+        // Rotate player to move direction
+        transform.DORotate(rotation, _rotateDuration);
+
+        // Sequence for jump animation
+        _moveAnimationSequence = DOTween.Sequence();
+        _moveAnimationSequence.Append(transform.DOMoveY(_jumpPower, _moveDuration / 2));
+        _moveAnimationSequence.Append(transform.DOMoveY(0, _moveDuration / 2));
+    }
+
+
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Enemy"))
-            return;
-
-        AnimateDie();
+        if (other.CompareTag("Enemy"))
+        {
+            AnimateDie();
+        }
     }
 
     private void AnimateDie()

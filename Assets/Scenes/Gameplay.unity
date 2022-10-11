@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -170,7 +170,7 @@ MonoBehaviour:
   _roadPrefabs:
   - {fileID: 6393072668953734185, guid: 3ffa8e39fedf1cd4a8d08d2cf9f7946d, type: 3}
   - {fileID: 412438507825726828, guid: 1e233c58184b2d74fab1bf45d29c54b4, type: 3}
-  _roadCountBetweenPlayer: 10
+  initialRoadSpawnNumber: 20
 --- !u!1001 &1240043773
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -231,9 +231,17 @@ PrefabInstance:
       value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 5328232701451295630, guid: 48713777a1c75d54d84ecc681b975c63, type: 3}
+      propertyPath: _worldBuilder
+      value: 
+      objectReference: {fileID: 890695949}
+    - target: {fileID: 5328232701451295630, guid: 48713777a1c75d54d84ecc681b975c63, type: 3}
       propertyPath: _playerTransform
       value: 
       objectReference: {fileID: 1240043777}
+    - target: {fileID: 5328232701451295630, guid: 48713777a1c75d54d84ecc681b975c63, type: 3}
+      propertyPath: _dieAnimationDuration
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48713777a1c75d54d84ecc681b975c63, type: 3}
 --- !u!4 &1240043777 stripped
