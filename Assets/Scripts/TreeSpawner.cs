@@ -12,6 +12,7 @@ public class TreeSpawner : MonoBehaviour
 
 
     private int _halfRoadCount = GameManager.HalfRoadWidth;
+    readonly List<Vector3> _emptySpawnPosition = new List<Vector3>();
 
     private void Awake()
     {
@@ -21,31 +22,41 @@ public class TreeSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-         List<Vector3> emptySpawnPosition = new List<Vector3>();
+        StoreAllEmptySpawnPositionOnTheRoad();
+        AddTreeToTheEdgeOfTheRoad();
+        SpawnTreesOnEmptySpotRandomly();
+    }
 
-        for (int x = -_halfRoadCount -1; x <= _halfRoadCount; x++)
+    private void SpawnTreesOnEmptySpotRandomly()
+    {
+        for (int i = 0; i < _treeCount; i++)
+        {
+            var chosenPosition = Random.Range(0, _emptySpawnPosition.Count);
+            Instantiate(_treePrefab, _emptySpawnPosition[chosenPosition], Quaternion.identity,
+                transform);
+            _emptySpawnPosition.RemoveAt(chosenPosition);
+        }
+    }
+
+    private void AddTreeToTheEdgeOfTheRoad()
+    {
+        Instantiate(_treePrefab, _emptySpawnPosition[0], Quaternion.identity,
+            transform);
+        _emptySpawnPosition.RemoveAt(0);
+
+        Instantiate(_treePrefab, _emptySpawnPosition[_emptySpawnPosition.Count - 1], Quaternion.identity,
+            transform);
+        _emptySpawnPosition.RemoveAt(_emptySpawnPosition.Count - 1);
+    }
+
+    private void StoreAllEmptySpawnPositionOnTheRoad()
+    {
+        for (int x = -_halfRoadCount - 1; x <= _halfRoadCount; x++)
         {
             if (x == 0 && transform.position.z == 0)
                 continue;
-            
-            emptySpawnPosition.Add(new Vector3(x, 0, transform.position.z));
-        }
-        
-        Instantiate(_treePrefab, emptySpawnPosition[0], Quaternion.identity,
-            transform);
-        emptySpawnPosition.RemoveAt(0);
-        
-        Instantiate(_treePrefab, emptySpawnPosition[emptySpawnPosition.Count - 1], Quaternion.identity,
-            transform);
-        emptySpawnPosition.RemoveAt(emptySpawnPosition.Count - 1);
 
-        
-        for (int i = 0; i < _treeCount; i++)
-        {
-            var chosenPosition = Random.Range(0, emptySpawnPosition.Count);
-            Instantiate(_treePrefab, emptySpawnPosition[chosenPosition], Quaternion.identity,
-                transform);
-            emptySpawnPosition.RemoveAt(chosenPosition);
+            _emptySpawnPosition.Add(new Vector3(x, 0, transform.position.z));
         }
     }
 }

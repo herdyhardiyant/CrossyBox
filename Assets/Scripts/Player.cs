@@ -9,21 +9,35 @@ public class Player : MonoBehaviour
     [SerializeField] private float _jumpPower = 0.5f;
     [SerializeField] private float _dieAnimationDuration = 0.5f;
     [SerializeField] private WorldBuilder _worldBuilder;
-    
+
     [SerializeField] private GameManager _gameManager;
 
     private Sequence _moveAnimationSequence;
 
-    // TODO Update player step score
     // TODO Create player is die
+
+    public static event Action OnPlayerReachedMaxZPosition;
+
+
+    public bool IsDie => enabled == false;
     
+    private int _maxZReached = 0;
+    public int MaxZReached => _maxZReached;
 
     void Update()
     {
         InputMove();
-
-        _gameManager.UpdateScore((int) transform.position.z);
-
+        MaxZPositionReached();
+    }
+    
+    public void MaxZPositionReached()
+    {
+        var playerZPosition = (int)transform.position.z;
+        if(playerZPosition > _maxZReached)
+        {
+            _maxZReached = playerZPosition;
+            OnPlayerReachedMaxZPosition?.Invoke();
+        }
     }
 
     private void InputMove()
@@ -46,7 +60,6 @@ public class Player : MonoBehaviour
             {
                 Move(Vector3.right, new Vector3(0, 90, 0));
             }
-            
         }
     }
 
