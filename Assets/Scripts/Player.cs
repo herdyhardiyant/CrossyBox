@@ -9,11 +9,24 @@ public class Player : MonoBehaviour
     [SerializeField] private float _jumpPower = 0.5f;
     [SerializeField] private float _dieAnimationDuration = 0.5f;
     [SerializeField] private WorldBuilder _worldBuilder;
+    
+    [SerializeField] private GameManager _gameManager;
 
     private Sequence _moveAnimationSequence;
 
+    // TODO Update player step score
+    // TODO Create player is die
+    
 
     void Update()
+    {
+        InputMove();
+
+        _gameManager.UpdateScore((int) transform.position.z);
+
+    }
+
+    private void InputMove()
     {
         if (_moveAnimationSequence == null || !_moveAnimationSequence.IsActive())
         {
@@ -33,6 +46,7 @@ public class Player : MonoBehaviour
             {
                 Move(Vector3.right, new Vector3(0, 90, 0));
             }
+            
         }
     }
 

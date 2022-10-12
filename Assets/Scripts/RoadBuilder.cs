@@ -7,16 +7,21 @@ public class RoadBuilder : MonoBehaviour
 {
     [SerializeField] private GameObject roadPrefab;
 
-    private int _halfRoadCount = 6;
+    private int _halfRoadCount = GameManager.HalfRoadWidth;
 
     void Start()
     {
+        AddCenterRoad();
         
-        _halfRoadCount += 1;
         for (int i = -_halfRoadCount; i < _halfRoadCount; i++)
         {
             Instantiate(roadPrefab, new Vector3(i, 0, transform.position.z), Quaternion.identity, transform);
         }
+    }
+
+    private void AddCenterRoad()
+    {
+        _halfRoadCount += 1;
     }
 
 }

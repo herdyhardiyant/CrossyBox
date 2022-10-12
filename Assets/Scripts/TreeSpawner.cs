@@ -11,14 +11,19 @@ public class TreeSpawner : MonoBehaviour
     [SerializeField] private GameObject _treePrefab;
 
 
-    private const int halfRoadCount = 6;
+    private int _halfRoadCount = GameManager.HalfRoadWidth;
+
+    private void Awake()
+    {
+        _halfRoadCount = GameManager.HalfRoadWidth;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
          List<Vector3> emptySpawnPosition = new List<Vector3>();
 
-        for (int x = -halfRoadCount -1; x <= halfRoadCount; x++)
+        for (int x = -_halfRoadCount -1; x <= _halfRoadCount; x++)
         {
             if (x == 0 && transform.position.z == 0)
                 continue;

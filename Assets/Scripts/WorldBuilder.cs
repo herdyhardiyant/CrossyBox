@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,15 +10,21 @@ public class WorldBuilder : MonoBehaviour
     
  
     // TODO use player position to spawn new roads and destroy old roads
-    // TODO Update zlimit to be based on player position
+    // TODO Update zlimit to be the last road in the array
     
     private int zLimit = -2;
     
     public int ZLimit => zLimit;
-    public int LeftLimit => -7;
-    public int RightLimit => 7;
-
+    public int LeftLimit => -GameManager.HalfRoadWidth - 1;
+    public int RightLimit => GameManager.HalfRoadWidth + 1;
     
+    // TODO Infinite road spawning
+    // Dequeue road and destroy it
+    // Get the last road in the array and set it as the new last road
+    // Set ZLimit to the new last road's z position
+    private Queue<GameObject> _roads = new Queue<GameObject>();
+
+
     void Start()
     {
         BuildSafeRoadForPlayerSpawn();
@@ -28,7 +35,8 @@ public class WorldBuilder : MonoBehaviour
     {
         for (int i = zLimit; i <= 0; i++)
         {
-            Instantiate(_roadPrefabs[1], new Vector3(0, 0, i), Quaternion.identity, transform);
+            var newRoad = Instantiate(_roadPrefabs[1], new Vector3(0, 0, i), Quaternion.identity, transform);
+            
         }
     }
 
@@ -40,7 +48,7 @@ public class WorldBuilder : MonoBehaviour
             
             if (CheckIsTheLastThreeRoadsAreSame(chosenIndex))
             {
-                chosenIndex = _secondLastChosenRoadIndex == 0 ? 1 : 0;
+                chosenIndex = chosenIndex == 0 ? 1 : 0;
             }
 
             var chosenRoad = _roadPrefabs[chosenIndex];
