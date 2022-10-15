@@ -9,15 +9,13 @@ public class Player : MonoBehaviour
     [SerializeField] private float _jumpPower = 0.5f;
     [SerializeField] private float _dieAnimationDuration = 0.5f;
     [SerializeField] private WorldBuilder _worldBuilder;
-
+    [SerializeField] private AudioSource dieAudioSource;
     [SerializeField] private GameManager _gameManager;
+    
 
     private Sequence _moveAnimationSequence;
 
-    // TODO Create player is die
-
     public static event Action OnPlayerReachedMaxZPosition;
-
 
     public bool IsDie => enabled == false;
     
@@ -120,6 +118,7 @@ public class Player : MonoBehaviour
 
     private void AnimateDie()
     {
+        dieAudioSource.Play();
         transform.DOScaleY(0.1f, _dieAnimationDuration);
         transform.DOScaleX(2, _dieAnimationDuration);
         transform.DOScaleZ(2, _dieAnimationDuration);

@@ -19,9 +19,9 @@ public class WorldBuilder : MonoBehaviour
     public int LeftLimit => -GameManager.HalfRoadWidth - 1;
     public int RightLimit => GameManager.HalfRoadWidth + 1;
 
-    public const int ZPositionToStartBeginSpawningRoad = 15;
+    public const int ZPositionToStartSpawningRoad = 15;
 
-    
+
     private Queue<GameObject> _roads = new Queue<GameObject>();
     private int _furthestRoadZPosition;
 
@@ -38,11 +38,11 @@ public class WorldBuilder : MonoBehaviour
 
     private void SpawnAndDestroyRoads()
     {
-        if (ZPositionToStartBeginSpawningRoad > _player.MaxZReached)
+        print( _player.MaxZReached);
+        if (ZPositionToStartSpawningRoad > _player.MaxZReached)
             return;
-        
-        DestroyLastRoad();
 
+        DestroyLastRoad();
         BuildNewRoad();
     }
 
@@ -134,5 +134,10 @@ public class WorldBuilder : MonoBehaviour
         }
 
         return false;
+    }
+
+    private void OnDestroy()
+    {
+        Player.OnPlayerReachedMaxZPosition -= SpawnAndDestroyRoads;
     }
 }
